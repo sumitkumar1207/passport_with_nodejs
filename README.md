@@ -38,7 +38,7 @@ bcrypt.genSalt(10, (err, salt) => {
 ```
 
 #### Implement passport
-Local strategy of passport are used here. For more info please check [passport-local]('http://www.passportjs.org/packages/passport-local/')
+Local strategy of passport are used here. For more info please check [passport-local](http://www.passportjs.org/packages/passport-local/)
 
 ```javascript
 
