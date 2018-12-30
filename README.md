@@ -15,6 +15,27 @@ $ npm run dev
 
 # Visit http://localhost:5505
 ```
+### Example
+The best part is that how you would save the user plain password to just non understadable(hash).
+
+```javascript
+
+//Hash password
+bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.hash(newUser.password, salt, (err, hash) => {
+        if (err) throw err;
+
+        //Set password to hash
+        newUser.password = hash;
+
+        //Svae user to DB
+        newUser.save().then(user => {
+            res.json(user)
+        }).catch(err => console.log(err))
+    });
+});
+
+```
 
 ### MongoDB
 
