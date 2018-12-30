@@ -37,6 +37,45 @@ bcrypt.genSalt(10, (err, salt) => {
 
 ```
 
+#### Implement passport
+Local strategy of passport are used here. For more info please check [passport-local]('http://www.passportjs.org/packages/passport-local/')
+
+```javascript
+
+passport.use(
+	new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
+
+			//Check for user
+			User.findOne({
+					email: email
+			}).then(user => {
+				
+					//NO match
+					if (!user) {
+                        //returnig done. done is callback and null is for error and false for user,  message for option 
+							return done(null, false, { message: "Email is not registered" })
+					}
+
+					//Match passpord
+                    //password is just plain password and user.password is hash password
+					bcrypt.compare(password, user.password, (err, isMatch) => {
+							if (err) throw err;
+
+							if (isMatch) {
+									return done(null, user);
+							} else {
+									return done(null, false, {
+											message: 'Password incorrect'
+									});
+							}
+					});
+			}).catch(err => console.log(err))
+
+	})
+); 
+
+```
+
 ### MongoDB
 
 Open "config/keys.js" and add your MongoDB URI, local or Atlas
